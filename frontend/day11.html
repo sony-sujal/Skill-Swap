@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<head>
+    <title>Day 11</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            padding: 20px;
+            transition: background-color 0.4s, color 0.4s;
+        }
+        h2 {
+            color: #333;
+        }
+        p {
+            padding: 10px;
+            background-color: #eee;
+            width: fit-content;
+            transition: background-color 0.4s;
+        }
+
+        /* Dark mode styles */
+        .dark-mode {
+            background-color: #121212;
+            color: #f0f0f0;
+        }
+        .dark-mode p {
+            background-color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <h2 id="myHeading">Welcome to Day 11 Project!</h2>
+    <button id="changeBtn">Change Heading</button>
+    <button id="darkModeBtn">Toggle Dark Mode</button>
+
+    <hr>
+
+    <form id="nameForm">
+        <label for="nameInput">Enter your name:</label>
+        <input type="text" id="nameInput" name="name" required>
+        <button type="submit">Submit</button>
+    </form>
+
+    <hr>
+
+    <p id="hoverPara">Hover over this paragraph to change its background!</p>
+
+    <script>
+        document.getElementById("changeBtn").addEventListener("click", function() {
+            const heading = document.getElementById("myHeading");
+            heading.textContent = "The heading has been changed!";
+            heading.style.color = "crimson";
+        });
+
+        document.getElementById("nameForm").addEventListener("submit", function(event) {
+            event.preventDefault(); 
+            const name = document.getElementById("nameInput").value;
+            alert("Hello, " + name + "!");
+        });
+
+        const para = document.getElementById("hoverPara");
+        para.addEventListener("mouseover", function() {
+            para.style.backgroundColor = "#ffeb3b";
+        });
+        para.addEventListener("mouseout", function() {
+            para.style.backgroundColor = "#eee";
+        });
+
+        document.getElementById("darkModeBtn").addEventListener("click", function() {
+            document.body.classList.toggle("dark-mode");
+        });
+    </script>
+
+</body>
+</html>

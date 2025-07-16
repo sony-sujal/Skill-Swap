@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<head>
+    <title>Day 12</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #e0e5ec;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .calculator {
+            display: grid;
+            grid-template-rows: 70px auto;
+            grid-gap: 15px;
+            background: #f9f9f9;
+            padding: 22px;
+            border-radius: 15px;
+            border: 2px solid #ccc;
+            box-shadow: 4px 4px 8px #c5c9cf,
+                        -4px -4px 8px #ffffff;
+        }
+        .display {
+            width: 100%;
+            font-size: 28px;
+            text-align: right;
+            padding: 8px;
+            border: none;
+            border-radius: 10px;
+            background: #333;
+            color: #0f0;
+            box-shadow: inset 2px 2px 4px #222, inset -2px -2px 4px #444;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 70px);
+            grid-template-rows: repeat(5, 70px);
+            grid-gap: 12px;
+            justify-content: center;
+        }
+        button {
+            font-size: 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            background: #e0e5ec;
+            box-shadow: 3px 3px 6px #c5c9cf,
+                        -3px -3px 6px #ffffff;
+            transition: all 0.2s;
+        }
+        button:active {
+            box-shadow: inset 3px 3px 6px #c5c9cf,
+                        inset -3px -3px 6px #ffffff;
+        }
+        .operator {
+            background: #ff9800;
+            color: white;
+            box-shadow: 3px 3px 6px #cc7a00,
+                        -3px -3px 6px #ffb84d;
+        }
+        .operator:active {
+            box-shadow: inset 3px 3px 6px #cc7a00,
+                        inset -3px -3px 6px #ffb84d;
+        }
+        .equal {
+            background: #4caf50;
+            color: white;
+            grid-column: span 2;
+            box-shadow: 3px 3px 6px #3d8b40,
+                        -3px -3px 6px #6fd272;
+        }
+        .equal:active {
+            box-shadow: inset 3px 3px 6px #3d8b40,
+                        inset -3px -3px 6px #6fd272;
+        }
+        .clear {
+            background: #f44336;
+            color: white;
+            box-shadow: 3px 3px 6px #c63027,
+                        -3px -3px 6px #ff6457;
+        }
+        .clear:active {
+            box-shadow: inset 3px 3px 6px #c63027,
+                        inset -3px -3px 6px #ff6457;
+        }
+    </style>
+</head>
+<body>
+
+<div class="calculator">
+    <input type="text" class="display" id="display" disabled>
+    <div class="buttons">
+        <button onclick="appendNumber('7')">7</button>
+        <button onclick="appendNumber('8')">8</button>
+        <button onclick="appendNumber('9')">9</button>
+        <button class="operator" onclick="appendOperator('/')">÷</button>
+
+        <button onclick="appendNumber('4')">4</button>
+        <button onclick="appendNumber('5')">5</button>
+        <button onclick="appendNumber('6')">6</button>
+        <button class="operator" onclick="appendOperator('*')">×</button>
+
+        <button onclick="appendNumber('1')">1</button>
+        <button onclick="appendNumber('2')">2</button>
+        <button onclick="appendNumber('3')">3</button>
+        <button class="operator" onclick="appendOperator('-')">–</button>
+
+        <button onclick="appendNumber('0')">0</button>
+        <button onclick="appendDecimal()">.</button>
+        <button class="clear" onclick="clearDisplay()">C</button>
+        <button class="operator" onclick="appendOperator('+')">+</button>
+
+        <button class="equal" onclick="calculate()">=</button>
+    </div>
+</div>
+
+<script>
+    const display = document.getElementById('display');
+
+    function appendNumber(number) {
+        display.value += number;
+    }
+
+    function appendOperator(operator) {
+        if (display.value !== '' && !isOperator(display.value.slice(-1))) {
+            display.value += operator;
+        }
+    }
+
+    function appendDecimal() {
+        const lastPart = display.value.split(/[\+\-\*\/]/).pop();
+        if (!lastPart.includes('.')) {
+            display.value += '.';
+        }
+    }
+
+    function isOperator(char) {
+        return ['+', '-', '*', '/'].includes(char);
+    }
+
+    function clearDisplay() {
+        display.value = '';
+    }
+
+    function calculate() {
+        try {
+            display.value = eval(display.value);
+        } catch {
+            alert('Invalid expression');
+        }
+    }
+</script>
+
+</body>
+</html>

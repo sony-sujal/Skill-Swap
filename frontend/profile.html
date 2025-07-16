@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillSwap Pro | My Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .profile-container {
+            padding: 60px 0;
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .profile-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--primary);
+        }
+        
+        .profile-info h1 {
+            margin-bottom: 10px;
+        }
+        
+        .profile-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 15px;
+            color: var(--rating);
+        }
+        
+        .profile-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .profile-sections {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+        }
+        
+        .profile-sidebar {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--box-shadow);
+            height: fit-content;
+        }
+        
+        .profile-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .profile-nav a {
+            padding: 12px 15px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            color: var(--dark);
+            transition: var(--transition);
+        }
+        
+        .profile-nav a:hover, .profile-nav a.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .profile-content {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .skills-section {
+            margin-bottom: 30px;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .skill-card {
+            background-color: var(--secondary);
+            padding: 15px;
+            border-radius: var(--border-radius);
+        }
+        
+        .skill-card h4 {
+            margin-bottom: 10px;
+        }
+        
+        .edit-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span>SkillSwap Pro</span>
+                </a>
+                
+                <div class="nav-links">
+                    <a href="search.html">Search</a>
+                    <a href="swap.html">Swap</a>
+                    <a href="request.html">Requests</a>
+                    <a href="messages.html">Messages</a>
+                </div>
+                
+                <div class="search-bar">
+                    <input type="text" placeholder="Search...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                
+                <div class="user-profile" id="userProfile">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User Profile">
+                    <span class="name">John Doe</span>
+                    <div class="user-dropdown">
+                        <a href="profile.html"><i class="fas fa-user"></i> My Profile</a>
+                        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Profile Section -->
+    <section class="profile-container">
+        <div class="container">
+            <div class="profile-header">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile Photo" class="profile-avatar">
+                <div class="profile-info">
+                    <h1>John Doe</h1>
+                    <div class="profile-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <span>4.0 (12 reviews)</span>
+                    </div>
+                    <p>Member since June 2023</p>
+                    <div class="profile-actions">
+                        <a href="#" class="btn btn-primary">Edit Profile</a>
+                        <a href="#" class="btn btn-outline">Share Profile</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="profile-sections">
+                <div class="profile-sidebar">
+                    <div class="profile-nav">
+                        <a href="#" class="active">Profile Overview</a>
+                        <a href="#">My Skills</a>
+                        <a href="#">Swap History</a>
+                        <a href="#">Reviews</a>
+                        <a href="#">Account Settings</a>
+                    </div>
+                </div>
+                
+                <div class="profile-content">
+                    <h2>About Me</h2>
+                    <p>I'm a web developer with 5 years of experience looking to exchange my coding skills for design and language learning. I specialize in JavaScript and React, and I'm passionate about creating user-friendly interfaces.</p>
+                    
+                    <div class="skills-section">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <h2>My Skills</h2>
+                            <button class="edit-btn">+ Add Skill</button>
+                        </div>
+                        <div class="skills-grid">
+                            <div class="skill-card">
+                                <h4>Web Development</h4>
+                                <p>JavaScript, React, Node.js</p>
+                            </div>
+                            <div class="skill-card">
+                                <h4>UI/UX Design</h4>
+                                <p>Figma, Adobe XD</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skills-section">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <h2>Skills I Want</h2>
+                            <button class="edit-btn">+ Add Skill</button>
+                        </div>
+                        <div class="skills-grid">
+                            <div class="skill-card">
+                                <h4>Spanish Language</h4>
+                                <p>Conversational</p>
+                            </div>
+                            <div class="skill-card">
+                                <h4>Graphic Design</h4>
+                                <p>Logo design</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2023 SkillSwap Pro. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

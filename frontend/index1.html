@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillSwap Pro | Exchange Your Skills</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span>SkillSwap Pro</span>
+                </a>
+                
+                <div class="nav-links">
+                    <a href="search.html">Search</a>
+                    <a href="swap.html">Swap</a>
+                    <a href="request.html">Requests</a>
+                    <a href="messages.html">Messages</a>
+                </div>
+                
+                <div class="search-bar">
+                    <input type="text" placeholder="What skill are you looking for?">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                
+                <!-- User Profile (hidden by default) -->
+                <div class="user-profile" id="userProfile">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User Profile">
+                    <span class="name">John Doe</span>
+                    <div class="user-dropdown">
+                        <a href="profile.html"><i class="fas fa-user"></i> My Profile</a>
+                        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+                
+                <!-- Auth Buttons (shown by default) -->
+                <div class="auth-buttons" id="authButtons">
+                    <a href="login.html" class="btn btn-outline">Log In</a>
+                    <a href="signup.html" class="btn btn-primary">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Exchange Skills, Grow Together</h1>
+            <p>Connect with professionals worldwide to exchange your skills without money changing hands</p>
+        </div>
+    </section>
+
+    <!-- Featured Swappers -->
+    <section class="featured-swappers">
+        <div class="container">
+            <div class="section-title">
+                <h2>Recommended Skill Swappers</h2>
+                <p>Find the perfect match for your skill exchange</p>
+            </div>
+            
+            <div class="swapper-grid">
+                <!-- Swapper Cards will be loaded by JavaScript -->
+            </div>
+            
+            <div class="pagination">
+                <a href="#" class="page-link"><i class="fas fa-chevron-left"></i></a>
+                <a href="#" class="page-link active">1</a>
+                <a href="#" class="page-link">2</a>
+                <a href="#" class="page-link">3</a>
+                <a href="#" class="page-link"><i class="fas fa-chevron-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2023 SkillSwap Pro. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

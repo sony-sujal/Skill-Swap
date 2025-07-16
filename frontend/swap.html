@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillSwap Pro | My Swaps</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .swaps-container {
+            padding: 60px 0;
+        }
+        
+        .swap-tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 30px;
+        }
+        
+        .swap-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .swap-tab.active {
+            border-bottom: 3px solid var(--primary);
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .swap-list {
+            display: grid;
+            gap: 20px;
+        }
+        
+        .swap-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .swap-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .swap-user {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .swap-user img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .swap-status {
+            padding: 6px 12px;
+            border-radius: var(--border-radius);
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .swap-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .swap-skills {
+            padding: 15px;
+            background-color: var(--secondary);
+            border-radius: var(--border-radius);
+        }
+        
+        .swap-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: flex-end;
+        }
+        
+        .no-swaps {
+            text-align: center;
+            padding: 40px;
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header (same as index.html with active state) -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span>SkillSwap Pro</span>
+                </a>
+                
+                <div class="nav-links">
+                    <a href="search.html">Search</a>
+                    <a href="swap.html" class="active">Swap</a>
+                    <a href="request.html">Requests</a>
+                    <a href="messages.html">Messages</a>
+                </div>
+                
+                <div class="search-bar">
+                    <input type="text" placeholder="Search my swaps...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                
+                <div class="user-profile" id="userProfile">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User Profile">
+                    <span class="name">John Doe</span>
+                    <div class="user-dropdown">
+                        <a href="profile.html"><i class="fas fa-user"></i> My Profile</a>
+                        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Swaps Section -->
+    <section class="swaps-container">
+        <div class="container">
+            <div class="section-title">
+                <h2>My Swaps</h2>
+                <p>Manage your active skill exchanges</p>
+            </div>
+            
+            <div class="swap-tabs">
+                <div class="swap-tab active">Active</div>
+                <div class="swap-tab">Pending</div>
+                <div class="swap-tab">Completed</div>
+            </div>
+            
+            <div class="swap-list" id="swapList">
+                <!-- Active swaps will be loaded by JavaScript -->
+                <div class="no-swaps">
+                    <p>You don't have any active swaps yet</p>
+                    <a href="search.html" class="btn btn-primary" style="margin-top: 20px;">Find Skills to Swap</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (same as index.html) -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2023 SkillSwap Pro. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            
+            if (!currentUser) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // Tab switching
+            document.querySelectorAll('.swap-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    document.querySelectorAll('.swap-tab').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    // In a real app, you would load different content based on the tab
+                });
+            });
+            
+            // Load swaps from localStorage
+            const requests = JSON.parse(localStorage.getItem('swapRequests')) || [];
+            const userSwaps = requests.filter(req => req.status === 'accepted');
+            
+            if (userSwaps.length > 0) {
+                document.getElementById('swapList').innerHTML = userSwaps.map(swap => {
+                    const swapper = swappersData.find(s => s.id == swap.toUser);
+                    return `
+                        <div class="swap-card">
+                            <div class="swap-header">
+                                <div class="swap-user">
+                                    <img src="${swapper.image}" alt="${swapper.name}">
+                                    <div>
+                                        <h3>${swapper.name}</h3>
+                                        <div class="swapper-rating">
+                                            ${renderStars(swapper.rating)}
+                                            <span>${swapper.rating} (${swapper.reviews})</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swap-status status-accepted">Active</div>
+                            </div>
+                            
+                            <div class="swap-details">
+                                <div class="swap-skills">
+                                    <h4>You're Learning</h4>
+                                    <p>${swapper.skillsOffered}</p>
+                                </div>
+                                <div class="swap-skills">
+                                    <h4>You're Teaching</h4>
+                                    <p>${currentUser.skills.join(', ') || 'No skills listed'}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="swap-actions">
+                                <button class="btn btn-outline">Message</button>
+                                <button class="btn btn-primary">Complete Swap</button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        });
+    </script>
+</body>
+</html>

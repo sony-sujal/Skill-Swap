@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillSwap Pro | My Requests</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .requests-container {
+            padding: 60px 0;
+        }
+        
+        .request-list {
+            display: grid;
+            gap: 20px;
+        }
+        
+        .request-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--box-shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .request-info {
+            flex: 1;
+        }
+        
+        .request-user {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .request-user img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .request-skills {
+            margin-left: 65px;
+        }
+        
+        .request-status {
+            padding: 8px 15px;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+        }
+        
+        .status-pending {
+            background-color: #FFF3E0;
+            color: #FFA000;
+        }
+        
+        .status-accepted {
+            background-color: #E8F5E9;
+            color: #4CAF50;
+        }
+        
+        .status-rejected {
+            background-color: #FFEBEE;
+            color: #F44336;
+        }
+        
+        .no-requests {
+            text-align: center;
+            padding: 40px;
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header (same as index.html with active state) -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span>SkillSwap Pro</span>
+                </a>
+                
+                <div class="nav-links">
+                    <a href="search.html">Search</a>
+                    <a href="swap.html">Swap</a>
+                    <a href="request.html" class="active">Requests</a>
+                    <a href="messages.html">Messages</a>
+                </div>
+                
+                <div class="search-bar">
+                    <input type="text" placeholder="Search requests...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                
+                <div class="user-profile" id="userProfile">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User Profile">
+                    <span class="name">John Doe</span>
+                    <div class="user-dropdown">
+                        <a href="profile.html"><i class="fas fa-user"></i> My Profile</a>
+                        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Requests Section -->
+    <section class="requests-container">
+        <div class="container">
+            <div class="section-title">
+                <h2>My Requests</h2>
+                <p>View and manage your skill swap requests</p>
+            </div>
+            
+            <div class="request-list" id="requestList">
+                <!-- Requests will be loaded by JavaScript -->
+                <div class="no-requests">
+                    <p>You don't have any requests yet</p>
+                    <a href="search.html" class="btn btn-primary" style="margin-top: 20px;">Find Skills to Swap</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (same as index.html) -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2023 SkillSwap Pro. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            const requestList = document.getElementById('requestList');
+            
+            if (!currentUser) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // Load requests from localStorage
+            const requests = JSON.parse(localStorage.getItem('swapRequests')) || [];
+            const userRequests = requests.filter(req => req.fromUser == currentUser.id);
+            
+            if (userRequests.length > 0) {
+                requestList.innerHTML = userRequests.map(request => {
+                    const swapper = swappersData.find(s => s.id == request.toUser);
+                    return `
+                        <div class="request-card">
+                            <div class="request-info">
+                                <div class="request-user">
+                                    <img src="${swapper.image}" alt="${swapper.name}">
+                                    <div>
+                                        <h3>${swapper.name}</h3>
+                                        <div class="swapper-rating">
+                                            ${renderStars(swapper.rating)}
+                                            <span>${swapper.rating} (${swapper.reviews})</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="request-skills">
+                                    <div class="skill-item">
+                                        <span class="skill-label">You offer:</span>
+                                        <span>${currentUser.skills.join(', ') || 'No skills listed'}</span>
+                                    </div>
+                                    <div class="skill-item">
+                                        <span class="skill-label">You want:</span>
+                                        <span>${swapper.skillsOffered}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="request-status status-${request.status}">
+                                ${request.status.charAt(0).toUpperCase() + request.status.slice(1)}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        });
+    </script>
+</body>
+</html>

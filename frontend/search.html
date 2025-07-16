@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillSwap Pro | Search</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .search-container {
+            padding: 60px 0;
+        }
+        
+        .search-filters {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .filter-group {
+            margin-bottom: 20px;
+        }
+        
+        .filter-group h3 {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .filter-tag {
+            padding: 8px 15px;
+            background-color: var(--secondary);
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .filter-tag:hover, .filter-tag.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .search-results {
+            display: grid;
+            gap: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header (same as index.html with active state) -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span>SkillSwap Pro</span>
+                </a>
+                
+                <div class="nav-links">
+                    <a href="search.html" class="active">Search</a>
+                    <a href="swap.html">Swap</a>
+                    <a href="request.html">Requests</a>
+                    <a href="messages.html">Messages</a>
+                </div>
+                
+                <div class="search-bar">
+                    <input type="text" placeholder="Search for skills..." id="searchInput">
+                    <button id="searchButton"><i class="fas fa-search"></i></button>
+                </div>
+                
+                <div class="user-profile" id="userProfile">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User Profile">
+                    <span class="name">John Doe</span>
+                    <div class="user-dropdown">
+                        <a href="profile.html"><i class="fas fa-user"></i> My Profile</a>
+                        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Search Section -->
+    <section class="search-container">
+        <div class="container">
+            <div class="search-filters">
+                <div class="filter-group">
+                    <h3>Skills I Offer</h3>
+                    <div class="filter-options" id="skillsOffered">
+                        <div class="filter-tag">Web Development</div>
+                        <div class="filter-tag">Graphic Design</div>
+                        <div class="filter-tag">Photography</div>
+                        <div class="filter-tag">Content Writing</div>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <h3>Skills I Want</h3>
+                    <div class="filter-options" id="skillsWanted">
+                        <div class="filter-tag">Spanish Language</div>
+                        <div class="filter-tag">Cooking</div>
+                        <div class="filter-tag">Yoga</div>
+                        <div class="filter-tag">Music Production</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section-title">
+                <h2>Search Results</h2>
+                <p>Find the perfect match for your skill exchange</p>
+            </div>
+            
+            <div class="swapper-grid" id="searchResults">
+                <!-- Results will be loaded by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (same as index.html) -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2023 SkillSwap Pro. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            
+            if (!currentUser) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // Load swappers for search results
+            renderSwappers(document.getElementById('searchResults'));
+            
+            // Filter tag functionality
+            document.querySelectorAll('.filter-tag').forEach(tag => {
+                tag.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    // In a real app, you would filter results based on selected tags
+                });
+            });
+            
+            // Search functionality
+            document.getElementById('searchButton').addEventListener('click', performSearch);
+            document.getElementById('searchInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') performSearch();
+            });
+            
+            function performSearch() {
+                const query = document.getElementById('searchInput').value.toLowerCase();
+                if (query) {
+                    showNotification(`Searching for: ${query}`, 'success');
+                    // In a real app, you would filter results based on the query
+                }
+            }
+        });
+    </script>
+</body>
+</html>

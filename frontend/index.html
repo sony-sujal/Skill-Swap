@@ -1,0 +1,1647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillSwap Pro | Exchange Your Skills</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #166088;
+            --accent-color: #4fc3f7;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent-color);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .auth-buttons .btn {
+            margin-left: 10px;
+        }
+
+        /* Button Styles */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+
+        .btn-warning {
+            background-color: var(--warning-color);
+            color: var(--dark-color);
+        }
+
+        /* Card Styles */
+        .card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(79, 195, 247, 0.2);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        /* Profile Styles */
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 30px;
+            border: 5px solid white;
+            box-shadow: var(--box-shadow);
+        }
+
+        .profile-info h2 {
+            margin-bottom: 10px;
+        }
+
+        .rating {
+            color: var(--warning-color);
+            margin-bottom: 10px;
+        }
+
+        .location {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+        .badge-primary {
+            background-color: #e3f2fd;
+            color: var(--primary-color);
+        }
+
+        .badge-success {
+            background-color: #e8f5e9;
+            color: var(--success-color);
+        }
+
+        /* Skill List */
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        /* Page Layout */
+        .page {
+            padding: 40px 0;
+        }
+
+        .page-title {
+            margin-bottom: 30px;
+            color: var(--primary-color);
+        }
+
+        /* Login/Signup Page */
+        .auth-container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .auth-header h2 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .auth-footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        /* Search Bar */
+        .search-bar {
+            display: flex;
+            margin-bottom: 30px;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius) 0 0 var(--border-radius);
+            font-size: 16px;
+        }
+
+        .search-bar button {
+            padding: 0 20px;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        /* User Grid */
+        .user-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .user-card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .user-card-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+        }
+
+        .user-card-body {
+            padding: 15px;
+            flex: 1;
+        }
+
+        .user-card-footer {
+            padding: 15px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Request Cards */
+        .request-card {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .request-card-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 20px;
+        }
+
+        .request-card-body {
+            flex: 1;
+        }
+
+        .request-card-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 15px;
+            }
+
+            .nav-links {
+                margin-top: 15px;
+                width: 100%;
+                justify-content: space-around;
+            }
+
+            .nav-links li {
+                margin-left: 0;
+            }
+
+            .auth-buttons {
+                margin-top: 15px;
+            }
+
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .profile-img {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+
+            .search-bar {
+                flex-direction: column;
+            }
+
+            .search-bar input {
+                border-radius: var(--border-radius);
+                margin-bottom: 10px;
+            }
+
+            .search-bar button {
+                border-radius: var(--border-radius);
+                width: 100%;
+            }
+
+            .request-card {
+                flex-direction: column;
+            }
+
+            .request-card-img {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+
+            .request-card-actions {
+                margin-top: 15px;
+                justify-content: center;
+            }
+        }
+
+        /* Utility Classes */
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-3 {
+            margin-top: 15px;
+        }
+
+        .mb-3 {
+            margin-bottom: 15px;
+        }
+
+        .d-none {
+            display: none;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header/Navbar -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo" onclick="showPage('home-page')">
+                    <i class="fas fa-exchange-alt"></i> SkillSwap Pro
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#" onclick="showPage('home-page')">Home</a></li>
+                    <li><a href="#" onclick="showPage('explore-page')">Explore</a></li>
+                    <li><a href="#" onclick="showPage('requests-page')">Requests</a></li>
+                    <li><a href="#" onclick="showPage('profile-page')">Profile</a></li>
+                </ul>
+                <div class="auth-buttons">
+                    <button id="logout-btn" class="btn btn-outline">Logout</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Login Page (Default) -->
+        <div id="login-page" class="page">
+            <div class="auth-container fade-in">
+                <div class="auth-header">
+                    <h2>Welcome to SkillSwap Pro</h2>
+                    <p>Login to start exchanging your skills</p>
+                </div>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                </form>
+                <div class="auth-footer">
+                    <p>Don't have an account? <a href="#" onclick="showPage('signup-page')">Sign up</a></p>
+                    <p><a href="#">Forgot password?</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Signup Page -->
+        <div id="signup-page" class="page d-none">
+            <div class="auth-container fade-in">
+                <div class="auth-header">
+                    <h2>Create Your Account</h2>
+                    <p>Join our community of skill exchangers</p>
+                </div>
+                <form id="signup-form">
+                    <div class="form-group">
+                        <label for="signup-name">Full Name</label>
+                        <input type="text" id="signup-name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">Email</label>
+                        <input type="email" id="signup-email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-confirm">Confirm Password</label>
+                        <input type="password" id="signup-confirm" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+                </form>
+                <div class="auth-footer">
+                    <p>Already have an account? <a href="#" onclick="showPage('login-page')">Login</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Home Page -->
+        <div id="home-page" class="page d-none">
+            <h1 class="page-title">Dashboard</h1>
+            
+            <div class="card">
+                <h3>Welcome back, <span id="user-name">User</span>!</h3>
+                <p>Ready to exchange some skills today?</p>
+                
+                <div class="quick-actions mt-3">
+                    <button class="btn btn-primary" onclick="showPage('explore-page')">
+                        <i class="fas fa-search"></i> Find Skills
+                    </button>
+                    <button class="btn btn-outline" onclick="showPage('profile-page')">
+                        <i class="fas fa-user-edit"></i> Edit Profile
+                    </button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3>Your Recent Activity</h3>
+                    <a href="#" onclick="showPage('requests-page')">View All</a>
+                </div>
+                
+                <div id="recent-activity">
+                    <!-- Filled by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3>Recommended for You</h3>
+                    <a href="#" onclick="showPage('explore-page')">See More</a>
+                </div>
+                
+                <div class="user-grid" id="recommended-users">
+                    <!-- Filled by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Explore Page -->
+        <div id="explore-page" class="page d-none">
+            <h1 class="page-title">Find Skills to Swap</h1>
+            
+            <div class="search-bar">
+                <input type="text" id="skill-search" placeholder="Search for skills (e.g. Photoshop, Excel)">
+                <button class="btn btn-primary" onclick="searchSkills()">
+                    <i class="fas fa-search"></i> Search
+                </button>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3>Available Skill Swappers</h3>
+                    <div>
+                        <select id="filter-availability" class="form-control" style="width: auto; display: inline-block;">
+                            <option value="">All Availability</option>
+                            <option value="weekends">Weekends</option>
+                            <option value="evenings">Evenings</option>
+                            <option value="weekdays">Weekdays</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="user-grid" id="all-users">
+                    <!-- Filled by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Requests Page -->
+        <div id="requests-page" class="page d-none">
+            <h1 class="page-title">Your Swap Requests</h1>
+            
+            <div class="card">
+                <ul class="request-tabs">
+                    <li class="active" onclick="showRequests('pending')">Pending</li>
+                    <li onclick="showRequests('accepted')">Accepted</li>
+                    <li onclick="showRequests('completed')">Completed</li>
+                </ul>
+                
+                <div id="pending-requests">
+                    <h3>Pending Requests</h3>
+                    <div class="request-list">
+                        <!-- Filled by JavaScript -->
+                    </div>
+                </div>
+                
+                <div id="accepted-requests" class="d-none">
+                    <h3>Accepted Requests</h3>
+                    <div class="request-list">
+                        <!-- Filled by JavaScript -->
+                    </div>
+                </div>
+                
+                <div id="completed-requests" class="d-none">
+                    <h3>Completed Requests</h3>
+                    <div class="request-list">
+                        <!-- Filled by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Page -->
+        <div id="profile-page" class="page d-none">
+            <h1 class="page-title">Your Profile</h1>
+            
+            <div class="card">
+                <div class="profile-header">
+                    <img src="https://via.placeholder.com/120" alt="Profile" class="profile-img" id="profile-image">
+                    <div class="profile-info">
+                        <h2 id="profile-name">Your Name</h2>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>4.5</span>
+                        </div>
+                        <p class="location" id="profile-location">Location not set</p>
+                        <div>
+                            <span class="badge badge-primary" id="profile-status">Public</span>
+                            <span class="badge badge-success" id="profile-availability">Available</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <form id="profile-form">
+                    <div class="form-group">
+                        <label for="edit-name">Full Name</label>
+                        <input type="text" id="edit-name" class="form-control">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="edit-location">Location</label>
+                        <input type="text" id="edit-location" class="form-control">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="edit-bio">Bio</label>
+                        <textarea id="edit-bio" class="form-control" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Skills You Offer</label>
+                        <div class="skill-list" id="offered-skills">
+                            <!-- Filled by JavaScript -->
+                        </div>
+                        <div class="input-group">
+                            <input type="text" id="new-offered-skill" class="form-control" placeholder="Add new skill">
+                            <button type="button" class="btn btn-outline" onclick="addSkill('offered')">Add</button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Skills You Want</label>
+                        <div class="skill-list" id="wanted-skills">
+                            <!-- Filled by JavaScript -->
+                        </div>
+                        <div class="input-group">
+                            <input type="text" id="new-wanted-skill" class="form-control" placeholder="Add wanted skill">
+                            <button type="button" class="btn btn-outline" onclick="addSkill('wanted')">Add</button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="edit-availability">Availability</label>
+                        <select id="edit-availability" class="form-control">
+                            <option value="flexible">Flexible</option>
+                            <option value="weekends">Weekends</option>
+                            <option value="evenings">Evenings</option>
+                            <option value="weekdays">Weekdays</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Profile Visibility</label>
+                        <div>
+                            <label><input type="radio" name="visibility" value="public" checked> Public</label>
+                            <label><input type="radio" name="visibility" value="private"> Private</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        <button type="button" class="btn btn-outline">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Swap Request Modal -->
+        <div id="request-modal" class="modal d-none">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Request Skill Swap</h3>
+                    <button class="close-modal" onclick="closeModal()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="request-user-info">
+                        <img src="https://via.placeholder.com/80" alt="User" id="request-user-img">
+                        <h4 id="request-user-name">User Name</h4>
+                        <p id="request-user-skills">Offers: Skill1, Skill2 | Wants: Skill3, Skill4</p>
+                    </div>
+                    
+                    <form id="swap-request-form">
+                        <div class="form-group">
+                            <label>Your Offered Skill</label>
+                            <select id="your-skill" class="form-control" required>
+                                <!-- Filled by JavaScript -->
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Their Wanted Skill</label>
+                            <select id="their-skill" class="form-control" required>
+                                <!-- Filled by JavaScript -->
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="request-message">Message</label>
+                            <textarea id="request-message" class="form-control" rows="4" placeholder="Write a message to introduce yourself and propose the swap..."></textarea>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Send Request</button>
+                            <button type="button" class="btn btn-outline" onclick="closeModal()">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feedback Modal -->
+        <div id="feedback-modal" class="modal d-none">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Leave Feedback</h3>
+                    <button class="close-modal" onclick="closeModal()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="feedback-user-info">
+                        <img src="https://via.placeholder.com/80" alt="User" id="feedback-user-img">
+                        <h4 id="feedback-user-name">User Name</h4>
+                        <p>Swap completed: <span id="feedback-swap-details">Your Skill for Their Skill</span></p>
+                    </div>
+                    
+                    <form id="feedback-form">
+                        <div class="form-group">
+                            <label>Rating</label>
+                            <div class="rating-input">
+                                <i class="far fa-star" data-rating="1"></i>
+                                <i class="far fa-star" data-rating="2"></i>
+                                <i class="far fa-star" data-rating="3"></i>
+                                <i class="far fa-star" data-rating="4"></i>
+                                <i class="far fa-star" data-rating="5"></i>
+                            </div>
+                            <input type="hidden" id="feedback-rating" value="0">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="feedback-comment">Comments</label>
+                            <textarea id="feedback-comment" class="form-control" rows="4" placeholder="How was your experience with this skill swap?"></textarea>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Submit Feedback</button>
+                            <button type="button" class="btn btn-outline" onclick="closeModal()">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Global Variables
+        let currentUser = null;
+        let users = [];
+        let swapRequests = [];
+        
+        // Sample Data (In a real app, this would come from a database)
+        function initializeSampleData() {
+            users = [
+                {
+                    id: 1,
+                    name: "Alex Johnson",
+                    email: "alex@example.com",
+                    password: "password123",
+                    location: "New York, NY",
+                    bio: "Graphic designer and web developer looking to exchange skills.",
+                    profileImg: "https://randomuser.me/api/portraits/men/32.jpg",
+                    offeredSkills: ["Graphic Design", "Web Development", "Photoshop"],
+                    wantedSkills: ["Content Writing", "Video Editing", "SEO"],
+                    availability: "weekends",
+                    visibility: "public",
+                    rating: 4.5
+                },
+                {
+                    id: 2,
+                    name: "Maria Garcia",
+                    email: "maria@example.com",
+                    password: "password123",
+                    location: "Los Angeles, CA",
+                    bio: "Professional photographer and video editor.",
+                    profileImg: "https://randomuser.me/api/portraits/women/44.jpg",
+                    offeredSkills: ["Photography", "Video Editing", "Lightroom"],
+                    wantedSkills: ["Web Design", "Social Media Management"],
+                    availability: "flexible",
+                    visibility: "public",
+                    rating: 4.8
+                },
+                {
+                    id: 3,
+                    name: "James Smith",
+                    email: "james@example.com",
+                    password: "password123",
+                    location: "Chicago, IL",
+                    bio: "SEO expert and content writer.",
+                    profileImg: "https://randomuser.me/api/portraits/men/67.jpg",
+                    offeredSkills: ["SEO", "Content Writing", "Blogging"],
+                    wantedSkills: ["Graphic Design", "Web Development"],
+                    availability: "evenings",
+                    visibility: "public",
+                    rating: 4.2
+                },
+                {
+                    id: 4,
+                    name: "Sarah Williams",
+                    email: "sarah@example.com",
+                    password: "password123",
+                    location: "Austin, TX",
+                    bio: "Social media manager and marketing specialist.",
+                    profileImg: "https://randomuser.me/
+/portraits/women/68.jpg",
+                    offeredSkills: ["Social Media Management", "Digital Marketing"],
+                    wantedSkills: ["Photography", "Video Editing"],
+                    availability: "weekdays",
+                    visibility: "public",
+                    rating: 4.6
+                }
+            ];
+            
+            swapRequests = [
+                {
+                    id: 1,
+                    fromUserId: 2,
+                    toUserId: 1,
+                    offeredSkill: "Video Editing",
+                    wantedSkill: "Web Development",
+                    message: "Hi Alex, I'd love to exchange video editing for some web development help!",
+                    status: "pending",
+                    date: "2023-05-15"
+                },
+                {
+                    id: 2,
+                    fromUserId: 1,
+                    toUserId: 3,
+                    offeredSkill: "Graphic Design",
+                    wantedSkill: "Content Writing",
+                    message: "James, I need some content for my website. Can we swap?",
+                    status: "accepted",
+                    date: "2023-05-10"
+                },
+                {
+                    id: 3,
+                    fromUserId: 4,
+                    toUserId: 1,
+                    offeredSkill: "Social Media Management",
+                    wantedSkill: "Graphic Design",
+                    status: "completed",
+                    feedback: {
+                        rating: 5,
+                        comment: "Alex did an amazing job with the graphics for my Instagram!"
+                    },
+                    date: "2023-05-01"
+                }
+            ];
+        }
+        
+        // DOM Content Loaded
+        // DOM Content Loaded - Updated version
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if user is logged in (from sessionStorage)
+    const loggedInUser = sessionStorage.getItem('user');
+    const token = sessionStorage.getItem('token');
+    
+    if (loggedInUser && token) {
+        currentUser = JSON.parse(loggedInUser);
+        showPage('home-page');
+        updateUIForUser();
+    } else {
+        showPage('login-page');
+    }
+    
+    // Event Listeners
+    document.getElementById('login-form').addEventListener('submit', handleLogin);
+    document.getElementById('signup-form').addEventListener('submit', handleSignup);
+    document.getElementById('profile-form').addEventListener('submit', saveProfile);
+    document.getElementById('swap-request-form').addEventListener('submit', sendSwapRequest);
+    document.getElementById('feedback-form').addEventListener('submit', submitFeedback);
+    document.getElementById('logout-btn').addEventListener('click', logout);
+    
+    // Initialize rating stars
+    document.querySelectorAll('.rating-input i').forEach(star => {
+        star.addEventListener('click', function() {
+            const rating = parseInt(this.getAttribute('data-rating'));
+            setRating(rating);
+        });
+        
+        star.addEventListener('mouseover', function() {
+            const rating = parseInt(this.getAttribute('data-rating'));
+            highlightStars(rating);
+        });
+        
+        star.addEventListener('mouseout', function() {
+            const currentRating = parseInt(document.getElementById('feedback-rating').value);
+            highlightStars(currentRating);
+        });
+    });
+});
+        // Page Navigation
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.add('d-none');
+            });
+            
+            // Show selected page
+            const page = document.getElementById(pageId);
+            page.classList.remove('d-none');
+            page.classList.add('fade-in');
+            
+            // Update content based on page
+            switch(pageId) {
+                case 'home-page':
+                    loadHomePage();
+                    break;
+                case 'explore-page':
+                    loadExplorePage();
+                    break;
+                case 'requests-page':
+                    loadRequestsPage();
+                    break;
+                case 'profile-page':
+                    loadProfilePage();
+                    break;
+            }
+        }
+        
+        // Authentication Functions
+        // Updated login function
+async function handleLogin(e) {
+    e.preventDefault();
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
+    
+    try {
+        const response = await fetch('http://localhost:5000/api/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json();
+        
+        if (!response.ok) {
+            throw new Error(data.error || 'Login failed');
+        }
+
+        // Store the token and user data
+        sessionStorage.setItem('token', data.token);
+        sessionStorage.setItem('user', JSON.stringify(data.user));
+        currentUser = data.user;
+        
+        showPage('home-page');
+        updateUIForUser();
+    } catch (err) {
+        alert(err.message);
+    }
+}
+
+// Updated signup function
+async function handleSignup(e) {
+    e.preventDefault();
+    const name = document.getElementById('signup-name').value;
+    const email = document.getElementById('signup-email').value;
+    const password = document.getElementById('signup-password').value;
+    const confirm = document.getElementById('signup-confirm').value;
+
+    if (password !== confirm) {
+        alert('Passwords do not match');
+        return;
+    }
+
+    try {
+        const response = await fetch('http://localhost:5000/api/auth/signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name, email, password })
+        });
+
+        const data = await response.json();
+        
+        if (!response.ok) {
+            throw new Error(data.error || 'Signup failed');
+        }
+
+        // Store the token and user data
+        sessionStorage.setItem('token', data.token);
+        sessionStorage.setItem('user', JSON.stringify(data.user));
+        currentUser = data.user;
+        
+        showPage('profile-page');
+        updateUIForUser();
+        alert('Account created successfully! Please complete your profile.');
+    } catch (err) {
+        alert(err.message);
+    }
+}        
+        function handleSignup(e) {
+            e.preventDefault();
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const confirm = document.getElementById('signup-confirm').value;
+            
+            // Validate
+            if (password !== confirm) {
+                alert('Passwords do not match');
+                return;
+            }
+            
+            // Check if email exists
+            if (users.some(u => u.email === email)) {
+                alert('Email already in use');
+                return;
+            }
+            
+            // Create new user
+            const newUser = {
+                id: users.length + 1,
+                name,
+                email,
+                password,
+                location: "",
+                bio: "",
+                profileImg: "https://via.placeholder.com/120",
+                offeredSkills: [],
+                wantedSkills: [],
+                availability: "flexible",
+                visibility: "public",
+                rating: 0
+            };
+            
+            users.push(newUser);
+            currentUser = newUser;
+            sessionStorage.setItem('loggedInUser', JSON.stringify(newUser));
+            showPage('profile-page');
+            updateUIForUser();
+            alert('Account created successfully! Please complete your profile.');
+        }
+        
+        function logout() {
+            currentUser = null;
+            sessionStorage.removeItem('loggedInUser');
+            showPage('login-page');
+        }
+        
+        // Page Load Functions
+        // Updated home page loader
+async function loadHomePage() {
+    if (!currentUser) return;
+    
+    try {
+        // Get recent activity
+        const response = await fetch('http://localhost:5000/api/requests?status=pending&status=accepted&limit=3', {
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+            }
+        });
+        
+        const requests = await response.json();
+        const recentActivity = document.getElementById('recent-activity');
+        recentActivity.innerHTML = '';
+        
+        if (requests.length === 0) {
+            recentActivity.innerHTML = '<p>No recent activity. Start by exploring skills to swap!</p>';
+        } else {
+            requests.forEach(req => {
+                const otherUser = req.from_user_id === currentUser.id ? {
+                    name: req.to_user_name,
+                    profile_img: req.to_user_img
+                } : {
+                    name: req.from_user_name,
+                    profile_img: req.from_user_img
+                };
+                
+                const statusText = req.status === 'pending' ? 'Pending' : 
+                                  req.status === 'accepted' ? 'Accepted' : 'Completed';
+                
+                const activityItem = document.createElement('div');
+                activityItem.className = 'activity-item';
+                activityItem.innerHTML = `
+                    <p><strong>${otherUser.name}</strong> - ${statusText} swap: 
+                    ${req.offered_skill_name} for ${req.wanted_skill_name}</p>
+                    <small>${new Date(req.created_at).toLocaleDateString()}</small>
+                `;
+                recentActivity.appendChild(activityItem);
+            });
+        }
+        
+        // Get recommended users
+        const recResponse = await fetch('http://localhost:5000/api/users/recommended', {
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+            }
+        });
+        
+        const recommendedUsers = await recResponse.json();
+        const recommendedContainer = document.getElementById('recommended-users');
+        recommendedContainer.innerHTML = '';
+        
+        if (recommendedUsers.length === 0) {
+            recommendedContainer.innerHTML = '<p>No recommendations found. Complete your profile to get better matches.</p>';
+        } else {
+            recommendedUsers.forEach(user => {
+                const userCard = createUserCard(user);
+                recommendedContainer.appendChild(userCard);
+            });
+        }
+    } catch (err) {
+        console.error('Error loading home page:', err);
+        alert('Failed to load home page data');
+    }
+}
+
+// Updated explore page loader
+async function loadExplorePage() {
+    try {
+        const searchTerm = document.getElementById('skill-search').value.toLowerCase();
+        const availability = document.getElementById('filter-availability').value;
+        
+        let url = 'http://localhost:5000/api/users?';
+        if (searchTerm) url += `search=${encodeURIComponent(searchTerm)}&`;
+        if (availability) url += `availability=${availability}`;
+        
+        const response = await fetch(url, {
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+            }
+        });
+        
+        const users = await response.json();
+        const allUsersContainer = document.getElementById('all-users');
+        allUsersContainer.innerHTML = '';
+        
+        if (users.length === 0) {
+            allUsersContainer.innerHTML = '<p>No users found matching your criteria.</p>';
+        } else {
+            users.forEach(user => {
+                const userCard = createUserCard(user);
+                allUsersContainer.appendChild(userCard);
+            });
+        }
+    } catch (err) {
+        console.error('Error loading explore page:', err);
+        alert('Failed to load users');
+    }
+}        
+        function loadRequestsPage() {
+            showRequests('pending');
+        }
+        
+        function showRequests(type) {
+            // Set active tab
+            document.querySelectorAll('.request-tabs li').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Hide all request lists
+            document.getElementById('pending-requests').classList.add('d-none');
+            document.getElementById('accepted-requests').classList.add('d-none');
+            document.getElementById('completed-requests').classList.add('d-none');
+            
+            // Show selected list
+            const requestList = document.getElementById(`${type}-requests`);
+            requestList.classList.remove('d-none');
+            
+            // Clear existing content
+            const listContainer = requestList.querySelector('.request-list');
+            listContainer.innerHTML = '';
+            
+            // Filter requests
+            const filteredRequests = swapRequests.filter(req => {
+                if (type === 'pending') {
+                    return req.status === 'pending' && req.toUserId === currentUser.id;
+                } else if (type === 'accepted') {
+                    return req.status === 'accepted' && 
+                          (req.fromUserId === currentUser.id || req.toUserId === currentUser.id);
+                } else {
+                    return req.status === 'completed' && 
+                          (req.fromUserId === currentUser.id || req.toUserId === currentUser.id);
+                }
+            });
+            
+            if (filteredRequests.length === 0) {
+                listContainer.innerHTML = `<p>No ${type} requests found.</p>`;
+                return;
+            }
+            
+            // Add requests to list
+            filteredRequests.forEach(req => {
+                const otherUserId = req.fromUserId === currentUser.id ? req.toUserId : req.fromUserId;
+                const otherUser = users.find(u => u.id === otherUserId);
+                
+                const requestCard = document.createElement('div');
+                requestCard.className = 'request-card';
+                requestCard.innerHTML = `
+                    <img src="${otherUser.profileImg}" alt="${otherUser.name}" class="request-card-img">
+                    <div class="request-card-body">
+                        <h4>${otherUser.name}</h4>
+                        <p><strong>Swap:</strong> ${req.offeredSkill} for ${req.wantedSkill}</p>
+                        <p><strong>Date:</strong> ${req.date}</p>
+                        ${req.message ? `<p>${req.message}</p>` : ''}
+                    </div>
+                    <div class="request-card-actions">
+                        ${type === 'pending' && req.toUserId === currentUser.id ? `
+                            <button class="btn btn-success" onclick="respondToRequest(${req.id}, 'accept')">Accept</button>
+                            <button class="btn btn-danger" onclick="respondToRequest(${req.id}, 'reject')">Reject</button>
+                        ` : ''}
+                        ${type === 'accepted' ? `
+                            <button class="btn btn-success" onclick="completeRequest(${req.id})">Mark Complete</button>
+                        ` : ''}
+                        ${type === 'completed' && !req.feedback ? `
+                            <button class="btn btn-primary" onclick="openFeedbackModal(${req.id})">Leave Feedback</button>
+                        ` : ''}
+                    </div>
+                `;
+                
+                listContainer.appendChild(requestCard);
+            });
+        }
+        
+        // Updated profile loader
+async function loadProfilePage() {
+    if (!currentUser) return;
+    
+    try {
+        const response = await fetch(`http://localhost:5000/api/users/${currentUser.id}`, {
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+            }
+        });
+        
+        const user = await response.json();
+        
+        // Update the UI with the fetched user data
+        document.getElementById('profile-name').textContent = user.name;
+        document.getElementById('profile-image').src = user.profile_img;
+        document.getElementById('profile-location').textContent = user.location || 'Location not set';
+        document.getElementById('profile-status').textContent = user.visibility === 'public' ? 'Public' : 'Private';
+        document.getElementById('profile-availability').textContent = 
+            user.availability === 'weekends' ? 'Weekends' :
+            user.availability === 'evenings' ? 'Evenings' :
+            user.availability === 'weekdays' ? 'Weekdays' : 'Flexible';
+        
+        document.getElementById('edit-name').value = user.name;
+        document.getElementById('edit-location').value = user.location || '';
+        document.getElementById('edit-bio').value = user.bio || '';
+        document.getElementById('edit-availability').value = user.availability;
+        document.querySelector(`input[name="visibility"][value="${user.visibility}"]`).checked = true;
+        
+        // Fill skills
+        fillSkillsList('offered', user.offeredSkills);
+        fillSkillsList('wanted', user.wantedSkills);
+    } catch (err) {
+        console.error('Error loading profile:', err);
+        alert('Failed to load profile data');
+    }
+}
+
+// Updated profile save function
+async function saveProfile(e) {
+    e.preventDefault();
+    
+    try {
+        const response = await fetch(`http://localhost:5000/api/users/${currentUser.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+            },
+            body: JSON.stringify({
+                name: document.getElementById('edit-name').value,
+                location: document.getElementById('edit-location').value,
+                bio: document.getElementById('edit-bio').value,
+                availability: document.getElementById('edit-availability').value,
+                visibility: document.querySelector('input[name="visibility"]:checked').value
+            })
+        });
+        
+        if (!response.ok) {
+            throw new Error('Failed to save profile');
+        }
+        
+        // Update current user data
+        const updatedUser = await response.json();
+        currentUser = updatedUser;
+        sessionStorage.setItem('user', JSON.stringify(updatedUser));
+        
+        // Update UI
+        document.getElementById('profile-name').textContent = updatedUser.name;
+        document.getElementById('profile-location').textContent = updatedUser.location || 'Location not set';
+        document.getElementById('profile-status').textContent = updatedUser.visibility === 'public' ? 'Public' : 'Private';
+        document.getElementById('profile-availability').textContent = 
+            updatedUser.availability === 'weekends' ? 'Weekends' :
+            updatedUser.availability === 'evenings' ? 'Evenings' :
+            updatedUser.availability === 'weekdays' ? 'Weekdays' : 'Flexible';
+        
+        alert('Profile saved successfully!');
+    } catch (err) {
+        console.error('Error saving profile:', err);
+        alert(err.message);
+    }
+}        // Helper Functions
+        function createUserCard(user) {
+            const card = document.createElement('div');
+            card.className = 'user-card card';
+            
+            card.innerHTML = `
+                <img src="${user.profileImg}" alt="${user.name}" class="user-card-img">
+                <div class="user-card-body">
+                    <h4>${user.name}</h4>
+                    <div class="rating">
+                        ${Array(Math.floor(user.rating)).fill('<i class="fas fa-star"></i>').join('')}
+                        ${user.rating % 1 ? '<i class="fas fa-star-half-alt"></i>' : ''}
+                        ${Array(5 - Math.ceil(user.rating)).fill('<i class="far fa-star"></i>').join('')}
+                        <span>${user.rating.toFixed(1)}</span>
+                    </div>
+                    <p class="location">${user.location}</p>
+                    <div class="skill-list">
+                        <strong>Offers:</strong> ${user.offeredSkills.slice(0, 3).join(', ')}
+                    </div>
+                    <div class="skill-list">
+                        <strong>Wants:</strong> ${user.wantedSkills.slice(0, 3).join(', ')}
+                    </div>
+                    <p><small>Available: ${user.availability}</small></p>
+                </div>
+                <div class="user-card-footer">
+                    <button class="btn btn-outline" onclick="viewProfile(${user.id})">
+                        <i class="fas fa-eye"></i> View
+                    </button>
+                    <button class="btn btn-primary" onclick="openRequestModal(${user.id})">
+                        <i class="fas fa-exchange-alt"></i> Swap
+                    </button>
+                </div>
+            `;
+            
+            return card;
+        }
+        
+        function fillSkillsList(type, skills) {
+            const container = document.getElementById(`${type}-skills`);
+            container.innerHTML = '';
+            
+            skills.forEach(skill => {
+                const skillTag = document.createElement('span');
+                skillTag.className = 'badge badge-primary';
+                skillTag.innerHTML = `
+                    ${skill} <span class="remove-skill" onclick="removeSkill('${type}', '${skill}')">&times;</span>
+                `;
+                container.appendChild(skillTag);
+            });
+        }
+        
+        function updateUIForUser() {
+            if (!currentUser) return;
+            
+            // Update header with user info
+            document.getElementById('logout-btn').textContent = `Logout (${currentUser.name})`;
+        }
+        
+        // Skill Management
+        // Updated add skill function
+async function addSkill(type) {
+    const input = document.getElementById(`new-${type}-skill`);
+    const skill = input.value.trim();
+    
+    if (!skill) return;
+    
+    try {
+        const response = await fetch(`http://localhost:5000/api/skills/${currentUser.id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+            },
+            body: JSON.stringify({
+                skillName: skill,
+                type: type
+            })
+        });
+        
+        if (!response.ok) {
+            throw new Error('Failed to add skill');
+        }
+        
+        // Refresh the skills list
+        await loadProfilePage();
+        input.value = '';
+    } catch (err) {
+        console.error('Error adding skill:', err);
+        alert(err.message);
+    }
+}
+
+// Updated remove skill function
+async function removeSkill(type, skill) {
+    try {
+        const response = await fetch(`http://localhost:5000/api/skills/${currentUser.id}/${encodeURIComponent(skill)}/${type}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+            }
+        });
+        
+        if (!response.ok) {
+            throw new Error('Failed to remove skill');
+        }
+        
+        // Refresh the skills list
+        await loadProfilePage();
+    } catch (err) {
+        console.error('Error removing skill:', err);
+        alert(err.message);
+    }
+}        // Profile Management
+        function saveProfile(e) {
+            e.preventDefault();
+            
+            currentUser.name = document.getElementById('edit-name').value;
+            currentUser.location = document.getElementById('edit-location').value;
+            currentUser.bio = document.getElementById('edit-bio').value;
+            currentUser.availability = document.getElementById('edit-availability').value;
+            currentUser.visibility = document.querySelector('input[name="visibility"]:checked').value;
+            
+            // Update UI
+            document.getElementById('profile-name').textContent = currentUser.name;
+            document.getElementById('profile-location').textContent = currentUser.location || 'Location not set';
+            document.getElementById('profile-status').textContent = currentUser.visibility === 'public' ? 'Public' : 'Private';
+            document.getElementById('profile-availability').textContent = 
+                currentUser.availability === 'weekends' ? 'Weekends' :
+                currentUser.availability === 'evenings' ? 'Evenings' :
+                currentUser.availability === 'weekdays' ? 'Weekdays' : 'Flexible';
+            
+            alert('Profile saved successfully!');
+        }
+        
+        // Request Management
+        function respondToRequest(requestId, action) {
+            const request = swapRequests.find(req => req.id === requestId);
+            if (!request) return;
+            
+            if (action === 'accept') {
+                request.status = 'accepted';
+                alert('Swap request accepted!');
+            } else {
+                swapRequests = swapRequests.filter(req => req.id !== requestId);
+                alert('Swap request rejected.');
+            }
+            
+            showRequests('pending');
+        }
+        
+        function completeRequest(requestId) {
+            const request = swapRequests.find(req => req.id === requestId);
+            if (!request) return;
+            
+            request.status = 'completed';
+            alert('Swap marked as completed!');
+            showRequests('accepted');
+        }
+        
+        function openFeedbackModal(requestId) {
+            const request = swapRequests.find(req => req.id === requestId);
+            if (!request) return;
+            
+            const otherUserId = request.fromUserId === currentUser.id ? request.toUserId : request.fromUserId;
+            const otherUser = users.find(u => u.id === otherUserId);
+            
+            document.getElementById('feedback-user-img').src = otherUser.profileImg;
+            document.getElementById('feedback-user-name').textContent = otherUser.name;
+            document.getElementById('feedback-swap-details').textContent = 
+                `${request.offeredSkill} for ${request.wantedSkill}`;
+            
+            // Set request ID on form
+            document.getElementById('feedback-form').setAttribute('data-request-id', requestId);
+            
+            // Reset rating
+            setRating(0);
+            
+            // Show modal
+            document.getElementById('feedback-modal').classList.remove('d-none');
+        }
+        
+        function submitFeedback(e) {
+            e.preventDefault();
+            
+            const requestId = parseInt(document.getElementById('feedback-form').getAttribute('data-request-id'));
+            const request = swapRequests.find(req => req.id === requestId);
+            if (!request) return;
+            
+            const rating = parseInt(document.getElementById('feedback-rating').value);
+            const comment = document.getElementById('feedback-comment').value;
+            
+            request.feedback = {
+                rating,
+                comment
+            };
+            
+            // Update user rating (simplified - in real app would average all ratings)
+            const otherUserId = request.fromUserId === currentUser.id ? request.toUserId : request.fromUserId;
+            const otherUser = users.find(u => u.id === otherUserId);
+            
+            // Simple average calculation
+            const allFeedbacks = swapRequests
+                .filter(req => req.feedback && 
+                      (req.fromUserId === otherUserId || req.toUserId === otherUserId))
+                .map(req => req.feedback.rating);
+            
+            otherUser.rating = allFeedbacks.length > 0 ? 
+                (allFeedbacks.reduce((a, b) => a + b, 0) / allFeedbacks.length : 
+                rating;
+            
+            closeModal();
+            alert('Feedback submitted!');
+            showRequests('completed');
+        }
+        
+        // Rating Functions
+        function setRating(rating) {
+            document.getElementById('feedback-rating').value = rating;
+            highlightStars(rating);
+        }
+        
+        function highlightStars(rating) {
+            const stars = document.querySelectorAll('.rating-input i');
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.remove('far');
+                    star.classList.add('fas');
+                } else {
+                    star.classList.remove('fas');
+                    star.classList.add('far');
+                }
+            });
+        }
+        
+        // Search Functionality
+        function searchSkills() {
+            const searchTerm = document.getElementById('skill-search').value.toLowerCase();
+            const availabilityFilter = document.getElementById('filter-availability').value;
+            
+            const filteredUsers = users.filter(user => {
+                // Skip current user and private profiles
+                if (user.id === currentUser.id || user.visibility !== 'public') return false;
+                
+                // Filter by availability
+                if (availabilityFilter && user.availability !== availabilityFilter) return false;
+                
+                // Filter by search term in skills
+                return user.offeredSkills.some(skill => skill.toLowerCase().includes(searchTerm)) ||
+                       user.wantedSkills.some(skill => skill.toLowerCase().includes(searchTerm));
+            });
+            
+            const allUsers = document.getElementById('all-users');
+            allUsers.innerHTML = '';
+            
+            if (filteredUsers.length === 0) {
+                allUsers.innerHTML = '<p>No users found matching your criteria.</p>';
+            } else {
+                filteredUsers.forEach(user => {
+                    const userCard = createUserCard(user);
+                    allUsers.appendChild(userCard);
+                });
+            }
+        }
+        
+        // View Profile
+        function viewProfile(userId) {
+            const user = users.find(u => u.id === userId);
+            if (!user) return;
+            
+            alert(`Viewing profile of ${user.name}\n\n` +
+                  `Location: ${user.location}\n` +
+                  `Skills Offered: ${user.offeredSkills.join(', ')}\n` +
+                  `Skills Wanted: ${user.wantedSkills.join(', ')}\n` +
+                  `Availability: ${user.availability}\n` +
+                  `Rating: ${user.rating.toFixed(1)}/5`);
+        }
+    </script>
+</body>
+</html>

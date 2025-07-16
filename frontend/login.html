@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillSwap Pro | Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .login-container {
+            max-width: 500px;
+            margin: 60px auto;
+            padding: 40px;
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+        
+        .login-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .login-title h1 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+        }
+        
+        .signup-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .signup-link a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header (same as index.html) -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span>SkillSwap Pro</span>
+                </a>
+                
+                <div class="auth-buttons">
+                    <a href="login.html" class="btn btn-outline">Log In</a>
+                    <a href="signup.html" class="btn btn-primary">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Login Form -->
+    <main>
+        <div class="login-container">
+            <div class="login-title">
+                <h1>Welcome Back</h1>
+                <p>Log in to your SkillSwap Pro account</p>
+            </div>
+            
+            <form onsubmit="event.preventDefault(); handleLogin(document.getElementById('loginEmail').value, document.getElementById('loginPassword').value)">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary login-btn">Log In</button>
+                
+                <div class="signup-link">
+                    Don't have an account? <a href="signup.html">Sign up</a>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer (same as index.html) -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2023 SkillSwap Pro. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // In a real app, you would verify credentials with your backend
+            // For demo purposes, we'll simulate a successful login
+            const user = {
+                id: 1,
+                name: "John Doe",
+                email: email,
+                skills: ["Web Development", "Graphic Design"]
+            };
+            
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            
+            showNotification('Login successful! Redirecting...', 'success');
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

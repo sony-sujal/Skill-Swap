@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillSwap Pro | Messages</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .messages-container {
+            padding: 60px 0;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+        }
+        
+        .conversation-list {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+        }
+        
+        .conversation-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .conversation-item {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .conversation-item:hover, .conversation-item.active {
+            background-color: var(--secondary);
+        }
+        
+        .conversation-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .conversation-user img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .conversation-preview {
+            margin-left: 50px;
+            font-size: 14px;
+            color: var(--gray);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .message-area {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .message-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .message-header img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            max-height: 500px;
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            max-width: 70%;
+        }
+        
+        .message.received {
+            align-self: flex-start;
+        }
+        
+        .message.sent {
+            align-self: flex-end;
+            text-align: right;
+        }
+        
+        .message-content {
+            padding: 10px 15px;
+            border-radius: 18px;
+            display: inline-block;
+        }
+        
+        .message.received .message-content {
+            background-color: var(--secondary);
+        }
+        
+        .message.sent .message-content {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .message-time {
+            font-size: 12px;
+            color: var(--gray);
+            margin-top: 5px;
+        }
+        
+        .message-input {
+            padding: 15px;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .message-input input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+        }
+        
+        .message-input button {
+            padding: 0 20px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+        }
+        
+        .no-conversation {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            padding: 40px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header (same as index.html with active state) -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span>SkillSwap Pro</span>
+                </a>
+                
+                <div class="nav-links">
+                    <a href="search.html">Search</a>
+                    <a href="swap.html">Swap</a>
+                    <a href="request.html">Requests</a>
+                    <a href="messages.html" class="active">Messages</a>
+                </div>
+                
+                <div class="search-bar">
+                    <input type="text" placeholder="Search messages...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                
+                <div class="user-profile" id="userProfile">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User Profile">
+                    <span class="name">John Doe</span>
+                    <div class="user-dropdown">
+                        <a href="profile.html"><i class="fas fa-user"></i> My Profile</a>
+                        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Messages Section -->
+    <section class="messages-container">
+        <div class="container">
+            <div class="conversation-list">
+                <div class="conversation-header">
+                    <h3>Conversations</h3>
+                </div>
+                
+                <div class="conversation-item active">
+                    <div class="conversation-user">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Marc Demo">
+                        <div>
+                            <h4>Marc Demo</h4>
+                            <div class="swapper-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="conversation-preview">
+                        Hey! When would you like to schedule our first session?
+                    </div>
+                </div>
+                
+                <div class="conversation-item">
+                    <div class="conversation-user">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Aichell">
+                        <div>
+                            <h4>Aichell</h4>
+                            <div class="swapper-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="conversation-preview">
+                        I've sent you the Spanish learning materials...
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message-area">
+                <div class="message-header">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Marc Demo">
+                    <div>
+                        <h3>Marc Demo</h3>
+                        <p>Web Development · JavaScript</p>
+                    </div>
+                </div>
+                
+                <div class="messages">
+                    <div class="message received">
+                        <div class="message-content">
+                            Hey John! Thanks for agreeing to this skill swap. When would you like to schedule our first session?
+                        </div>
+                        <div class="message-time">Yesterday, 3:45 PM</div>
+                    </div>
+                    
+                    <div class="message sent">
+                        <div class="message-content">
+                            Hi Marc! How about this Saturday at 2pm?
+                        </div>
+                        <div class="message-time">Yesterday, 4:12 PM</div>
+                    </div>
+                    
+                    <div class="message received">
+                        <div class="message-content">
+                            Saturday at 2pm works perfectly for me! I'll send you a Zoom link closer to the time.
+                        </div>
+                        <div class="message-time">Yesterday, 4:30 PM</div>
+                    </div>
+                    
+                    <div class="message sent">
+                        <div class="message-content">
+                            Great! Looking forward to it. I'll prepare some graphic design basics to go over with you.
+                        </div>
+                        <div class="message-time">Today, 9:15 AM</div>
+                    </div>
+                </div>
+                
+                <div class="message-input">
+                    <input type="text" placeholder="Type your message...">
+                    <button><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (same as index.html) -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2023 SkillSwap Pro. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            
+            if (!currentUser) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // Conversation switching
+            document.querySelectorAll('.conversation-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    document.querySelectorAll('.conversation-item').forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                    // In a real app, you would load the conversation messages
+                });
+            });
+            
+            // Send message
+            document.querySelector('.message-input button').addEventListener('click', function() {
+                const input = document.querySelector('.message-input input');
+                const message = input.value.trim();
+                
+                if (message) {
+                    const messagesContainer = document.querySelector('.messages');
+                    const now = new Date();
+                    const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                    
+                    messagesContainer.innerHTML += `
+                        <div class="message sent">
+                            <div class="message-content">${message}</div>
+                            <div class="message-time">${timeString}</div>
+                        </div>
+                    `;
+                    
+                    input.value = '';
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                    
+                    // In a real app, you would send this to your backend
+                    setTimeout(() => {
+                        messagesContainer.innerHTML += `
+                            <div class="message received">
+                                <div class="message-content">Thanks for your message! I'll get back to you soon.</div>
+                                <div class="message-time">${timeString}</div>
+                            </div>
+                        `;
+                        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                    }, 1000);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
